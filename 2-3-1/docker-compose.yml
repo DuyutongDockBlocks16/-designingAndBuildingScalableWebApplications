@@ -1,0 +1,21 @@
+services:
+  api:
+    build: api
+    restart: unless-stopped
+    volumes:
+      - ./api:/app
+    ports:
+      - 7777:7777
+    depends_on:
+      - database
+    env_file:
+      - project.env
+
+  database:
+    container_name: postgresql_database
+    image: postgres:16.1
+    ports:
+      - 5432:5432
+    restart: unless-stopped
+    env_file:
+      - project.env
