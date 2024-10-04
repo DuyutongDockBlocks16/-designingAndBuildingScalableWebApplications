@@ -1,0 +1,4 @@
+CREATE TABLE todos (
+  id SERIAL PRIMARY KEY,
+  item TEXT NOT NULL
+);
