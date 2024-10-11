@@ -1,1 +1,36 @@
-// TODO
+version: "3.4"
+
+services:
+  items-api:
+    build: items-api
+    image: items-api
+    restart: "no"
+    volumes:
+      - ./items-api/:/app
+      - ./app-cache/:/app-cache
+    ports:
+      - "7777-7778:7777"
+    depends_on:
+      - database
+      - flyway
+    env_file:
+      - project.env
+    deploy:
+      replicas: 2
+
+  database:
+    container_name: database-server
+    image: postgres:14.1
+    restart: "no"
+    env_file:
+      - project.env
+
+  flyway:
+    image: flyway/flyway:9.11.0-alpine
+    depends_on:
+      - database
+    volumes:
+      - ./flyway/sql/:/flyway/sql
+    command: -connectRetries=60 -baselineOnMigrate=true migrate
+    env_file:
+      - project.env
