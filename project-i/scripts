@@ -1,0 +1,16 @@
+docker compose down
+docker system prune -a
+docker volume prune
+
+docker-compose build --no-cache
+docker compose up
+
+def hello_world():
+    return "hello_world"
+
+def hello_world():
+    return "Hello Web Development"
+
+
+def sum(num1, num2):
+  return num1 + num2
